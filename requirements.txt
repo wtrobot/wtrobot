@@ -1,0 +1,10 @@
+selenium
+pymongo
+lxml
+requests
+langdetect
+pyyaml
+pytesseract
+opencv-python
+wget
+polib

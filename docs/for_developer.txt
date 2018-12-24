@@ -1,0 +1,17 @@
+Known Errors:
+
+1: Not handling multiple texts on single page.
+2: Not selecting that navigation item which is currently open.
+3: Code throws list range empty when it search words in en-US but page is yet to be loaded.
+	Reproduce: Don't give sleep after login and click on some button which comes after login.
+	Cause: Page stays half loaded so basically it gets reply from UI but as it is not loaded no element text is returned.
+	Way around: Give sleep.
+4: Script is dependent to UI coordinates, not sure how will it work with VM.
+5: Few warnings comes while using ALERT function.
+6: When input param is image, it is not stable yet.
+
+
+Please follow below steps to setup your own env.
+> make
+
+That is the only command you need to run at home directory of project to setup all the dependencies.
