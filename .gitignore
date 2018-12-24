@@ -1,0 +1,13 @@
+tmp/
+lib/__pycache__/
+.idea/
+logger.log
+geckodriver.log
+report.txt
+lang_scrape.yml
+screenshot/
+allTexts/
+python3Env
+report/
+.vscode/
+*.pyc
