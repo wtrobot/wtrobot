@@ -1,74 +1,73 @@
-#### *WTRobot.*
-
+# *WTRobot*
+------------------
 ## Introduction:
-
-WTRobot is a tool to minimize your dependencies on XPATHs for writing end to end automation. Which basically uses
-Selenium as its core engine.
+An webautomation framework inspired from [behave](https://behave.readthedocs.io/en/latest) and [robot](https://robotframework.org) framework. It is a tool to minimize your dependencies on XPATHs for writing end to end automation.
 
 The tool follows a yml scripting which you will find below.
 
-## Setup Instructions:
+## Setup:
 ```
-- Clone the repo.
-- cd into the downloaded directory.
-- Run following command
-    > make
+Download latest release tarball https://github.com/wtrobot/wtrobot/releases/latest
+$ pip3 install -r requirements.txt
+                or
+$ python3 setup.py install
 ```
+## Build from source:
+```
+$ git clone <this repo>
+$ cd <repo directory>
+$ pip3 install -r requirements.txt 
+            or
+$ python3 setup.py install
+```
+NOTE: 
+- Selenium_drivers folders have your selenium webdrivers geckodrivers(for firefox) and chromedrivers(for chrome and chromium)
+- If script failes due to drivers issue, you need to find appropriate selenium webdriver according to you browser version
+-- [firefox](https://github.com/mozilla/geckodriver/releases) & [chrome/chromium](https://chromedriver.chromium.org/downloads)
+
+ Just unzip or untar the executable and place in selenium_drivers dir.
 
 ## Executing Script:
+Just write all your test cases into test.yaml and execute
 ```
-Just write all your test cases into script.yml file using cmds[1]
-Also always make sure you activate your python env while running tool.
-> source python3Env/bin/activate
-> python engine.py run #to execute the demo script.
+$ python3 wtrobot.py
 ```
+Note: on initial run script will ask you few configuration question and create config.json file.
 
-You need to specify few settings in config.json file.
-1) menu_region
-2) workspace_region
-3) settings_region
+## Syntax of test.yaml file
+Write your WTRobot-v2 testcases in test.yaml files.
+```
+sequence:
+- testcase 1 
+- testcase 2 ...
+test:
+- testcase 1:
+    - scenario: <your test senario desc>
+    - step 1:
+       name: <your step desc>
+       action: goto | click | input | hover | scroll ...
+       target: text | xpath | css path
+       value: <data> 
+    - step 2:
+    ...
+- testcase 2:
+...
+```
+[sample example](examples/test.yaml)
 
-[1] WTRobot scripting:- 
+[detailed syntax](examples/syntax_docs.rst)
 
-Website independent:- 
- - SEQUENCE  :- This also can be called as test case specifier. In this you have to specify the sequence of testcases that you will write. 
- 
- - IMPORT  :- It is used to call test cases into one another.
-  
- - GOTO  :- Goes to the link provided by user.
- 
- - INPUT :- It is core functionality to give the input into text box.
- 
- - PRINT :- It is simple print function to debug your scripting.
- 
- - SLEEP :- By default it sleeps for 10 secs, you can also specify the time in front of this function.
- 
- - SCREENSHOT :- You can also specify which screens you wish to capture. It is recommended to give a small 2-3 secs sleep before taking screenshots.  
- 
- - CLICK :- You need to mention the text you wish to click on. If the text is present multiple times then you can also specify the region which you added in config.json.
- 
- - HOVER :- You need to mention the text you wish to move your mouse on. If the text is present multiple times then you can also specify the region which you added in config.json.
-  
- - I18N :- For now it takes out all the text present on the page and also maintain a new file with remaining english words.
+- scenario and name are just detailed text description about your testcase scenario and steps, they are useful for detailed logging.
+- There are only three important section to be considered while writing this script file.
+-- action: what to perform (click, input and etc)
+-- target: on what to perform (text on webpage, xpath)
+-- value: with what data (if an input filed then what value to input)
 
-Website Dependent:- It depends on sites made by patternfly with the menu region on left side as shown in this picture.
-![Imgur](https://i.imgur.com/XB5Wt0G.jpg)
- - NAVIGATE :- This is a navigation simplification function. It basically uses HOVER and CLICK only in background.
+## License
+This application is licensed under the MIT License.
+Please read file [LICENSE](LICENSE) for details.
 
-For further reference you can go through the sample file called as script.yml.
+## Credits
+Please read file [CONTRIBUTORS](CONTRIBUTORS.md) for list of contributors.
 
-QA:
-
-Q: Why is script failing with "Message: newSession"?
-
-A: You need to update your webdriver.
-
-IF you are using Firefox then follow this steps.
-
-Go on this link below and download the latest build of geckodriver according to your system configuration.
->  https://github.com/mozilla/geckodriver/releases
-
-Unzip the tar and place the executable in ./selenium_drivers/ .
-
-
-*Happy Coding :)*
+#### *Happy Testing :)*
