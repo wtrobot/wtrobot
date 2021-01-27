@@ -1,41 +1,40 @@
 # *WTRobot*
 ------------------
-## Introduction:
-An webautomation framework inspired from [behave](https://behave.readthedocs.io/en/latest) and [robot](https://robotframework.org) framework. It is a tool to minimize your dependencies on XPATHs for writing end to end automation.
+## Introduction
+The web automation framework inspired from [behave](https://behave.readthedocs.io/en/latest) and [robot](https://robotframework.org) framework. It is a tool to minimize your dependencies on XPATHs for writing end to end automation.
 
 The tool follows a yml scripting which you will find below.
 
-## Setup:
+## Setup
 ```
 Download latest release tarball https://github.com/wtrobot/wtrobot/releases/latest
+
 $ pip3 install -r requirements.txt
-                or
 $ python3 setup.py install
 ```
-## Build from source:
+## Build from source
 ```
 $ git clone <this repo>
 $ cd <repo directory>
 $ pip3 install -r requirements.txt 
-            or
 $ python3 setup.py install
 ```
-NOTE: 
+##### NOTE 
 - Selenium_drivers folders have your selenium webdrivers geckodrivers(for firefox) and chromedrivers(for chrome and chromium)
-- If script failes due to drivers issue, you need to find appropriate selenium webdriver according to you browser version
+- If script fails due to drivers issue, you need to find appropriate selenium webdriver according to your browser version
 -- [firefox](https://github.com/mozilla/geckodriver/releases) & [chrome/chromium](https://chromedriver.chromium.org/downloads)
+- Unzip or untar the executable and place in selenium_drivers dir.
 
- Just unzip or untar the executable and place in selenium_drivers dir.
-
-## Executing Script:
-Just write all your test cases into test.yaml and execute
+## Executing Script
+- Write all your test cases into test.yaml and execute
 ```
 $ python3 wtrobot.py
 ```
-Note: on initial run script will ask you few configuration question and create config.json file.
+##### NOTE
+ - On initial run script will ask you for few configuration question and create config.json file.
 
 ## Syntax of test.yaml file
-Write your WTRobot-v2 testcases in test.yaml files.
+- Write your WTRobot-v2 test cases in test.yaml files
 ```
 sequence:
 - testcase 1 
@@ -57,12 +56,13 @@ test:
 
 [detailed syntax](examples/syntax_docs.rst)
 
-- scenario and name are just detailed text description about your testcase scenario and steps, they are useful for detailed logging.
-- There are only three important section to be considered while writing this script file.
--- action: what to perform (click, input and etc)
--- target: on what to perform (text on webpage, xpath)
--- value: with what data (if an input filed then what value to input)
-
+- Scenario and name are just detailed text description about your test case scenario and steps, they are useful for detailed logging
+- There are only three important section to be considered while writing this script file
+```
+    -- action: what to perform (e.g. click, input and etc)
+    -- target: on what to perform (e.g. Text widget on web page, xpath of widget and etc)
+    -- value: with what data (e.g. if an input field then what value to input)
+```
 ## License
 This application is licensed under the MIT License.
 Please read file [LICENSE](LICENSE) for details.
