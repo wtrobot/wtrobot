@@ -10,14 +10,12 @@ The tool follows a yml scripting which you will find below.
 Download latest release tarball https://github.com/wtrobot/wtrobot/releases/latest
 
 $ pip3 install -r requirements.txt
-$ python3 setup.py install
 ```
 ## Build from source
 ```
 $ git clone <this repo>
 $ cd <repo directory>
-$ pip3 install -r requirements.txt 
-$ python3 setup.py install
+$ pip3 install -r requirements.txt
 ```
 ##### NOTE 
 - Selenium_drivers folders have your selenium webdrivers geckodrivers(for firefox) and chromedrivers(for chrome and chromium)
@@ -34,7 +32,7 @@ $ python3 wtrobot.py
  - On initial run script will ask you for few configuration question and create config.json file.
 
 ## Syntax of test.yaml file
-- Write your WTRobot-v2 test cases in test.yaml files
+- Write your WTRobot test cases in test.yaml files
 ```
 sequence:
 - testcase 1 

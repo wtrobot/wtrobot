@@ -1,6 +1,6 @@
 import time
 import logging
-from src import Operations, ActionChains, webdriver, WebDriverWait, EC, By
+from wtrobot import Operations, ActionChains, webdriver, WebDriverWait, EC, By
 from selenium.common.exceptions import (
     ElementNotInteractableException,
     ElementNotVisibleException,

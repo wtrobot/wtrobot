@@ -2,7 +2,7 @@ import os, sys
 import logging
 from collections import OrderedDict
 from ruamel.yaml import YAML
-import src
+import wtrobot
 
 
 class commmandParser:
@@ -14,7 +14,7 @@ class commmandParser:
 
         self.global_conf = global_conf
         self.testscript = self.yaml_loader(filepath=self.global_conf["script_filepath"])
-        self.obj_action = src.Actions(self.global_conf)
+        self.obj_action = wtrobot.Actions(self.global_conf)
         if not os.path.exists("./tmp"):
             os.makedirs("./tmp")
 
