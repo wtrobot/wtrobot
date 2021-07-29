@@ -144,6 +144,30 @@ class commmandParser:
                         )
                         break
 
+                    # ------------------- translation check --------------
+                    # Check for error if target element/str is pseudo translated
+                    if  ("error_pseudo_translated_check" in testcase_list[index][step].keys()
+                        and testcase_list[index][step]["error_pseudo_translated_check"] == True):
+                        
+                        testcase_list[index][step].pop("error_pseudo_translated_check")
+                        target_str = testcase_list[index][step].pop("error_pseudo_translated_str")
+                        logging.warning(
+                            "String '{0}' not pseudo translated in testcase:{1} on step:{2}".format(
+                                target_str,testcase_no, step
+                            )
+                        )
+                        
+                    # Check for error if target element/str is translated
+                    if  ("error_translated_check" in testcase_list[index][step].keys()
+                        and testcase_list[index][step]["error_translated_check"] == True):
+                        testcase_list[index][step].pop("error_translated_check")
+                        target_str = testcase_list[index][step].pop("error_translated_str")
+                        logging.warning(
+                            "String '{0}' not translated in testcase:{1} on step:{2}".format(
+                                target_str, testcase_no, step
+                            )
+                        )
+
                 else:
                     logging.error(
                         "INVALID COMMAND '{0}' in {1} at {2}".format(

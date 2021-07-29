@@ -1,5 +1,8 @@
+import re
 import time
 import logging
+
+from requests import check_compatibility
 from wtrobot import Operations, ActionChains, webdriver, WebDriverWait, EC, By
 from selenium.common.exceptions import (
     ElementNotInteractableException,
@@ -42,6 +45,38 @@ class Actions(Operations):
             elif "wait before action" in test_data.keys():
                 logging.info("waiting before action")
                 self.wait(test_data["wait before action"])
+
+            # check if target element is pseudo translated
+            if "check pseudo translated" in test_data.keys():
+                if test_data["check pseudo translated"]:
+                    def check_pseudo_translated(test_data):
+                        pseudo_translate_regex =  "\[[^\]]*\]"
+                        test_data = self.get_element(test_data)
+                        target_str = test_data["element_obj"].text
+                    
+                        if not re.search(pseudo_translate_regex, target_str):
+                            test_data["error_pseudo_translated_check"] = True
+                            test_data["error_pseudo_translated_str"] = target_str
+                            #print("Not Pseudo Translated")
+                        else:
+                            #print("Pseudo translated")
+                            pass
+                    check_pseudo_translated(test_data)
+
+            # check if target element is translated
+            if "check translated" in test_data.keys():
+                if test_data["check translated"]:
+                    def check_translated(test_data):
+                        test_data = self.get_element(test_data)
+                        target_str = test_data["element_obj"].text
+                    
+                        target_text = target_str.encode('unicode_escape')
+                        if self.global_conf["locale"] != "en_US":
+                            # check unicode pattern string
+                            if b"\\u" not in target_text:
+                                test_data["error_translated_check"] = True
+                                test_data["error_translated_str"] = target_str
+                    check_translated(test_data)
 
             # method call
             test_result_data = function(*args)
