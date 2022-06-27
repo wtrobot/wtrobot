@@ -27,10 +27,15 @@ test:
          <wait before action>
 
          <wait after action>
+         
+         <assert>
 
 ---------------------------------------------------------
 
 - List of actions: input | click | import | sleep | wait | validate | function | hover | goto | screenshot | closebrowser
+
+- List of assetions: text | xpath | locator | link | goto
+eg assert: text=Invalid login
 
 --------------
 

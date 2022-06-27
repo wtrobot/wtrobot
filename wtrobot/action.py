@@ -51,6 +51,39 @@ class Actions(Operations):
                 logging.info("waiting after action")
                 self.wait(test_data["wait after action"])
 
+            # assert or check anything after performing the current action
+            if "assert" in test_data.keys():
+                logging.info("asserting after action")
+                # split value at "=" to get assertion criteria and value
+                assert_by, assert_data =test_data["assert"].split("=",1)
+                
+                if assert_by.lower() == "text" or assert_by.lower() == "xpath":
+                    logging.info("check if text/xpath {0} is present on page".format(assert_by))
+                    if self.get_element_by_xpath_or_text(assert_data):
+                        logging.info("assertion passed")
+                    else:
+                        logging.info("assertion failed")
+                        test_data["error"] = True
+
+                elif assert_by.lower() == "locator":
+                    logging.info("check if locator {0} is present on page".format(assert_by))
+                    if self.get_element(assert_data):
+                        logging.info("assertion passed")
+                    else:
+                        logging.info("assertion failed")
+                        test_data["error"] = True
+                        
+                elif assert_by.lower() == "link" or assert_by.lower() == "goto":
+                    logging.info("check if we are redirected to {0}".format(assert_by))
+                    if self.driver.current_url == assert_data:
+                        logging.info("assertion passed")
+                    else:
+                        logging.info("assertion failed")
+                        test_data["error"] = True
+                else:
+                    logging.info("Invalid assertion type passed")
+                    test_data["error"] = True
+
             # screenshot after every action
             screenshot_file_name = None
             if "screenshot_name" not in test_data.keys():
