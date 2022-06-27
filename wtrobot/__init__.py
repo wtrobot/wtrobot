@@ -8,3 +8,4 @@ from io import StringIO
 from .commad_parser import commmandParser
 from .operations import Operations
 from .action import Actions
+from .main import main

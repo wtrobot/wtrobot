@@ -1,9 +1,9 @@
 import logging
 import requests
-from src import WebDriverWait, EC, By
+from wtrobot import WebDriverWait, EC, By
 import time
 import lxml.etree
-from src import StringIO
+from wtrobot import StringIO
 from selenium.common.exceptions import ElementNotVisibleException
 
 
