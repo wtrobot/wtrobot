@@ -1,16 +1,13 @@
 import os, sys
 import logging
 from collections import OrderedDict
-from ruamel.yaml import YAML
+import yaml
+from yaml.loader import SafeLoader
 import wtrobot
 
 
 class commmandParser:
     def __init__(self, global_conf):
-
-        self.yaml = YAML()
-        self.yaml.indent(1)
-        self.yaml.explicit_start = True
 
         self.global_conf = global_conf
         self.testscript = self.yaml_loader(filepath=self.global_conf["script_filepath"])
@@ -28,7 +25,7 @@ class commmandParser:
         data = dict()
         if os.path.isfile(filepath):
             with open(filepath, "r") as obj:
-                data = self.yaml.load(obj)
+                data = yaml.load(obj, Loader=SafeLoader)
             if not data:
                 return dict()
         else:
@@ -39,7 +36,7 @@ class commmandParser:
     def yaml_dump(self, filepath, data):
         """ Write the dict to yaml file """
         with open(filepath, "w") as obj:
-            self.yaml.dump(data, obj)
+            yaml.dump(data, obj, sort_keys=False, default_flow_style=False)
 
     def testcase_parser(self, testcase_list, testcase_no):
         """

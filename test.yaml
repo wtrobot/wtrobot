@@ -1,13 +1,11 @@
----
 sequence:
 - testcase 1
-
 test:
 - testcase 1:
   - scenario: Goto wtrobot github repo
   - step 1:
-     name: Goto web link
-     action: goto
-     target: https://github.com/wtrobot/wtrobot
-     targets:
-     - https://github.com/wtrobot/wtrobot
+      name: Goto web link
+      action: goto
+      target: https://github.com/wtrobot/wtrobot
+      targets:
+      - https://github.com/wtrobot/wtrobot

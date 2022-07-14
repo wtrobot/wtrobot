@@ -1,11 +1,8 @@
 import logging
 import requests
-from wtrobot import WebDriverWait, EC, By
 import time
-import lxml.etree
-from wtrobot import StringIO
 from selenium.common.exceptions import ElementNotVisibleException
-
+from wtrobot import WebDriverWait, EC, By, StringIO
 
 class Operations(object):
     def __init__(self, driver):

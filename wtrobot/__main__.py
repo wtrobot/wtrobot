@@ -2,19 +2,23 @@ import sys, os, json
 import logging
 from wtrobot import commmandParser
 
-
-def logger_init(filename):
+def logger_init(filename, dev=False):
+    
+    format_str = None
+    if dev:
+        format_str = "%(levelname)s - %(asctime)s - %(filename)s - %(lineno)d - %(message)s"
+    else:
+        format_str = "%(levelname)s - %(asctime)s - %(message)s"
+    
     logging.basicConfig(
         filename=filename,
         level=logging.INFO,
-        format="%(levelname)s - %(asctime)s - %(filename)s - %(lineno)d - %(message)s",
+        format=format_str,
     )
 
     console = logging.StreamHandler()
     console.setLevel(logging.INFO)
-    formatter = logging.Formatter(
-        "%(levelname)s - %(asctime)s - %(filename)s - %(lineno)d - %(message)s"
-    )
+    formatter = logging.Formatter(format_str)
     console.setFormatter(formatter)
     logging.getLogger("").addHandler(console)
     # marker to denote new log starting
@@ -57,13 +61,32 @@ def main():
             input("WTRobot execution log file path : wtlog.log ? ") or os.path.join(os.environ["wt_root_dir"],"wtlog.log")
         )
 
-    logger_init(config["log"])
+    # If you are developing the test suit set dev attribute in config to True 
+    # dev env not specified then set it to false (default)
+    # This flag makes logger less or more verbose
+    if config is None or "dev" not in config.keys():
+        config["dev"] = False
+    
+    if config["dev"]:
+        logger_init(filename=config["log"], dev=True)
+    else:
+        logger_init(config["log"])
+
     if not os.path.exists(config["script_filepath"]):
-        logging.error("Invalid script file path")
+        logging.error("""
+        Invalid script file path.
+        There is no script file {} at this location.
+        first create one and then execute "wtrobot" command.
+        """.format(config["script_filepath"]))
         sys.exit(0)
 
     if not os.path.exists(config["webdriver_path"]):
-        logging.error("Invalid webdriver file path")
+        logging.error("""
+        Invalid webdriver file path.
+        There is no webdriver file {} at this location.
+        make sure you have/download one at this location and then execute "wtrobot" command.
+        https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
+        """)
         sys.exit(0)
 
     if count < len(config):
@@ -71,3 +94,7 @@ def main():
             json.dump(config, fobj, indent=4)
 
     obj = commmandParser(config)
+
+
+if __name__ == "__main__":
+    main()

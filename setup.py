@@ -1,27 +1,37 @@
-import setuptools
+from importlib.metadata import entry_points
+import pathlib
+from setuptools import setup
 
-with open('requirements.txt') as require:
-    REQUIRE = require.read().splitlines()
+# The directory containing this file
+HERE = pathlib.Path(__file__).parent
 
-with open('README.md') as readme:
-    README = readme.read()
+# The text of the README file
+README = (HERE / "README.md").read_text()
 
-setuptools.setup(
-    name = 'WTRobot',
-    version = '1.0.0',
-    description = 'WTRobot web testing framework',
+# The text of the README file
+REQUIRE = (HERE / "requirements.txt").read_text()
+
+setup(
+    name = 'wtrobot',
+    version = '1.0.0-rc',
+    description = 'WTRobot is keyword driven web testing framework',
     long_description = README,
+    long_description_content_type="text/markdown",
     url = 'https://github.com/wtrobot/wtrobot',
     author = 'Vishal Vijayraghavan',
     author_email = 'vishalvvr@fedoraproject.org',
     license = 'MIT',
-    install_requires = REQUIRE,
-    python_requires=">=3.6",
-    zip_safe=False,
     classifiers = [
- 	'Natural Language :: English',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3 :: Only',
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
     ],
+    packages=["wtrobot"],
+    include_package_data=True,
+    entry_points={
+        "console_scripts":[
+            "wtrobot=wtrobot.__main__:main",
+        ]
+    },
+    install_requires = REQUIRE
 )

@@ -1,13 +1,12 @@
 import time
 import logging
-from wtrobot import Operations, ActionChains, webdriver, WebDriverWait, EC, By
 from selenium.common.exceptions import (
     ElementNotInteractableException,
     ElementNotVisibleException,
     TimeoutException,
 )
 from selenium.webdriver.common.keys import Keys
-
+from wtrobot import Operations, ActionChains, webdriver, WebDriverWait, EC, By
 
 class Actions(Operations):
     def __init__(self, global_conf):
