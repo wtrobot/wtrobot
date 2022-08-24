@@ -36,7 +36,8 @@ class Operations(object):
                     EC.presence_of_element_located((By.XPATH, element_data))
                 )
             else:
-                xpath = "//*[contains(text(),'{0}') or contains(@value,'{0}')]".format(
+		# [old] xpath = "//*[contains(text(),'{0}') or contains(@value,'{0}')]".format(
+                xpath = "//*[text()='{0}' or contains(@value,'{0}')]".format(
                     element_data
                 )
                 return WebDriverWait(self.driver, 20).until(
