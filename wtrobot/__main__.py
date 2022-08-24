@@ -24,10 +24,11 @@ def logger_init(filename, dev=False):
     # marker to denote new log starting
     logging.info("------------------new---------------------")
 
+def get_abs_filepath(filepath):
+    return os.path.join(os.getcwd(),filepath)
 
 def main():
-    os.environ["wt_root_dir"] = os.getcwd()
-    config_file_name = os.path.join(os.environ["wt_root_dir"],"config.json")
+    config_file_name = get_abs_filepath("config.json")
     config = dict()
     count = 0
     try:
@@ -41,7 +42,7 @@ def main():
 
     if config is None or "script_filepath" not in config.keys():
         config["script_filepath"] = (
-            input("Test script filename: test.yaml ? ") or os.path.join(os.environ["wt_root_dir"],"test.yaml")
+            input("Test script filename: test.yaml ? ") or "test.yaml"
         )
 
     if config is None or "browser" not in config.keys():
@@ -49,8 +50,8 @@ def main():
 
     if config is None or "webdriver_path" not in config.keys():
         config["webdriver_path"] = (
-            input("Selenium webdriver : ./selenium_drivers/geckodriver ? ")
-            or os.path.join(os.environ["wt_root_dir"],"selenium_drivers/geckodriver")
+            input("Selenium webdriver : selenium_drivers/geckodriver ? ")
+            or "selenium_drivers/geckodriver"
         )
 
     if config is None or "locale" not in config.keys():
@@ -58,7 +59,7 @@ def main():
 
     if config is None or "log" not in config.keys():
         config["log"] = (
-            input("WTRobot execution log file path : wtlog.log ? ") or os.path.join(os.environ["wt_root_dir"],"wtlog.log")
+            input("WTRobot execution log file path : wtlog.log ? ") or "wtlog.log"
         )
 
     # If you are developing the test suit set dev attribute in config to True 
@@ -72,7 +73,7 @@ def main():
     else:
         logger_init(config["log"])
 
-    if not os.path.exists(config["script_filepath"]):
+    if not os.path.exists(get_abs_filepath(config["script_filepath"])):
         logging.error("""
         Invalid script file path.
         There is no script file {} at this location.
@@ -80,7 +81,7 @@ def main():
         """.format(config["script_filepath"]))
         sys.exit(0)
 
-    if not os.path.exists(config["webdriver_path"]):
+    if not os.path.exists(get_abs_filepath(config["webdriver_path"])):
         logging.error("""
         Invalid webdriver file path.
         There is no webdriver file {} at this location.
