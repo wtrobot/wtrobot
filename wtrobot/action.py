@@ -18,13 +18,15 @@ class Actions(Operations):
             self = args[0]
             test_data = args[1]
 
-            # If no name key in step then add none to avoid execption
-            if "name" not in test_data.keys():
-                test_data["name"] = None
-
+            # If no name key in step then add empty string
+            name  = ""
+            _sep = ""
+            if "name" in test_data.keys():
+                name = test_data["name"]
+                _sep = ":"
             logging.info(
-                "TestCase:{0} - Step:{1} - {2}".format(
-                    test_data["testcase_no"], test_data["step_no"], test_data["name"]
+                "TestCase:{0} - Step:{1}{2}{3}".format(
+                    test_data["testcase_no"], test_data["step_no"],_sep,name
                 )
             )
 
