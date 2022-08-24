@@ -13,7 +13,7 @@ REQUIRE = (HERE / "requirements.txt").read_text()
 
 setup(
     name = 'wtrobot',
-    version = '1.0.0-rc',
+    version = '1.0.0-rc.2',
     description = 'WTRobot is keyword driven web testing framework',
     long_description = README,
     long_description_content_type="text/markdown",
