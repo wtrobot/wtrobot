@@ -139,6 +139,7 @@ class commmandParser:
                                 testcase_no, step
                             )
                         )
+                        self.obj_action.closebrowser(testcase_list[index][step])
                         break
 
                 else:
@@ -149,6 +150,8 @@ class commmandParser:
                             step,
                         )
                     )
+                    self.obj_action.closebrowser(testcase_list[index][step])
+                    break
 
         return testcase_list
 
