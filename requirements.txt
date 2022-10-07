@@ -1,3 +1,4 @@
 selenium==3.14.1
 pyyaml
 requests
+click==8.1.3

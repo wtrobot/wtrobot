@@ -6,7 +6,14 @@ from selenium.common.exceptions import (
     TimeoutException,
 )
 from selenium.webdriver.common.keys import Keys
-from wtrobot import Operations, ActionChains, webdriver, WebDriverWait, EC, By
+from lib.wt_lib.operations import Operations
+from selenium.webdriver import ActionChains
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from lib.utils.util import check_url
+
 
 class Actions(Operations):
     def __init__(self, global_conf):
@@ -109,15 +116,15 @@ class Actions(Operations):
         init all selenium browser session and create driver object
         """
         if (
-            not self.global_conf["webdriver_path"]
+            not self.global_conf["web_driver_path"]
             and self.global_conf["browser"].lower() == "firefox"
         ):
-            self.global_conf["webdriver_path"] = "./selenium_drivers/geckodriver"
+            self.global_conf["web_driver_path"] = "./selenium_drivers/geckodriver"
         elif (
-            not self.global_conf["webdriver_path"]
+            not self.global_conf["web_driver_path"]
             and self.global_conf["browser"].lower() == "chrome"
         ):
-            self.global_conf["webdriver_path"] = "./selenium_drivers/chromedriver"
+            self.global_conf["web_driver_path"] = "./selenium_drivers/chromedriver"
 
         if self.global_conf["browser"].lower() == "firefox":
             profile = webdriver.FirefoxProfile()
@@ -125,7 +132,7 @@ class Actions(Operations):
             profile.accept_untrusted_certs = True
             self.driver = webdriver.Firefox(
                 firefox_profile=profile,
-                executable_path=self.global_conf["webdriver_path"],
+                executable_path=self.global_conf["web_driver_path"],
             )
         elif self.global_conf["browser"].lower() == "chrome":
             options = webdriver.ChromeOptions()
@@ -134,7 +141,7 @@ class Actions(Operations):
                 {"intl.accept_languages": "{0}".format(self.global_conf["locale"])},
             )
             self.driver = webdriver.Chrome(
-                executable_path=self.global_conf["webdriver_path"],
+                executable_path=self.global_conf["web_driver_path"],
                 chrome_options=options,
             )
 
@@ -226,7 +233,7 @@ class Actions(Operations):
         """
         try:
             if test_data["target"]:
-                if self.check_url(test_data["target"]):
+                if check_url(test_data["target"]):
                     self.driver.get(test_data["target"])
                 else:
                     logging.error("Target URL not specified/invalid")

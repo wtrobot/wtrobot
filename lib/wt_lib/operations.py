@@ -1,31 +1,14 @@
 import logging
-import requests
 import time
 from selenium.common.exceptions import ElementNotVisibleException
-from wtrobot import WebDriverWait, EC, By, StringIO
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
 
 class Operations(object):
     def __init__(self, driver):
         self.driver = driver
-
-    def check_url(self, url):
-        """
-        This function is used to check if the given link is broken or not.It simply makes a http call and checks response
-        :param url: link which you want to check
-        :return: True if response is 200 else False
-        """
-        try:
-            if "file:" in url:
-                return True
-            else:
-                request = requests.get(url, verify=False)
-                if request.status_code == 200:
-                    return True
-                else:
-                    return False
-        except Exception as e:
-            print(e)
-            return False
 
     def get_element_by_xpath_or_text(self, element_data):
         xpath_denoter = ("//", "/html", "/")

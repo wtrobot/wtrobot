@@ -1,6 +1,6 @@
 from importlib.metadata import entry_points
 import pathlib
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # The directory containing this file
 HERE = pathlib.Path(__file__).parent
@@ -26,11 +26,11 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
     ],
-    packages=["wtrobot"],
+    packages=find_packages(include=["lib"]),
     include_package_data=True,
     entry_points={
         "console_scripts":[
-            "wtrobot=wtrobot.__main__:main",
+            "wtrobot=lib.cli.main:cli",
         ]
     },
     install_requires = REQUIRE

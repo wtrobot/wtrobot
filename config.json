@@ -1,7 +1,7 @@
 {
-    "script_filepath": "test.yaml",
+    "test_script_path": "test.yaml",
     "browser": "firefox",
-    "webdriver_path": "selenium_drivers/geckodriver",
+    "web_driver_path": "selenium_drivers/geckodriver",
     "locale": "en_US",
     "log": "wtlog.log",
     "dev": false

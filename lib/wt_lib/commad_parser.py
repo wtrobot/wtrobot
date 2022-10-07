@@ -1,42 +1,20 @@
-import os, sys
+import os
 import logging
 from collections import OrderedDict
-import yaml
-from yaml.loader import SafeLoader
-import wtrobot
-
+from lib.utils.util import yaml_loader, yaml_dump
+from lib.wt_lib.action import Actions
 
 class commmandParser:
     def __init__(self, global_conf):
 
         self.global_conf = global_conf
-        self.testscript = self.yaml_loader(filepath=self.global_conf["script_filepath"])
-        self.obj_action = wtrobot.Actions(self.global_conf)
+        self.testscript = yaml_loader(self.global_conf["test_script_path"])
+        self.obj_action = Actions(self.global_conf)
         if not os.path.exists("./tmp"):
             os.makedirs("./tmp")
 
         # initate parser
         self.testscript_parser()
-
-    def yaml_loader(self, filepath):
-        """ Read yaml file and return the dict """
-
-        logging.info("Reading script yml file")
-        data = dict()
-        if os.path.isfile(filepath):
-            with open(filepath, "r") as obj:
-                data = yaml.load(obj, Loader=SafeLoader)
-            if not data:
-                return dict()
-        else:
-            logging.error("invalid file {0}".format(filepath))
-            sys.exit(0)
-        return data
-
-    def yaml_dump(self, filepath, data):
-        """ Write the dict to yaml file """
-        with open(filepath, "w") as obj:
-            yaml.dump(data, obj, sort_keys=False, default_flow_style=False)
 
     def testcase_parser(self, testcase_list, testcase_no):
         """
@@ -181,6 +159,6 @@ class commmandParser:
             )
 
         # update script file
-        self.yaml_dump(
-            filepath=self.global_conf["script_filepath"], data=self.testscript
+        yaml_dump(
+            filepath=self.global_conf["test_script_path"], data=self.testscript
         )
