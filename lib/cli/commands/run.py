@@ -1,8 +1,11 @@
 from re import A
+import sys
 import click
-from lib.utils import util
+from lib.utils.util import Utils
 from lib.wt_lib.commad_parser import commmandParser
-from lib.utils.logger import logger_init
+import os
+import logging
+from lib.utils.logger import LogGen
 
 @click.command()
 @click.option('-s','--no-screenshot',default=False,is_flag=True,help="If you don't need screenshots to be captured")
@@ -10,16 +13,30 @@ from lib.utils.logger import logger_init
 @click.option('-b','--browser',default=False,help="browser on which you want to run tests")
 @click.option('-d','--web-driver-path',default=False,help="selenium webdriver path")
 @click.option('-L','--locale',default=False,help="browser local in which you want to run tests")
-@click.option('-t','--test-script-path',default=False,help="test script file path")
+@click.option('-t','--test-dir-path',default='tests',help="test dir path")
+@click.option('-e','--entry-test-script',default='test.yaml',help="entry test script file")
 @click.option('-D','--dev',default=False,is_flag=True,help="dev logging enable")
-
-def cli(no_screenshot, no_log, browser, web_driver_path, locale, test_script_path, dev):
+@click.option('-c','--config-file-path',default="config.json",help="config file path")
+def cli(no_screenshot, no_log, browser, web_driver_path, locale, test_dir_path, entry_test_script, dev, config_file_path):
     '''
     run all wtrobot testsuit.
     It will also take screenshot and log every step. 
     '''
     arg_exclude=('no_screenshot','no_log')
-    global_conf = util.json_load() #load config.json file into dict
+    
+    # check if tests dir and entry test script exist
+    test_dir_path = Utils.get_abs_filepath(test_dir_path)
+    if not os.path.isdir(test_dir_path):
+        testfile= os.path.join(test_dir_path, entry_test_script)
+        if not os.path.isfile(entry_test_script):
+            print("invalid test dir path or entry test script path given.")
+            sys.exit(1)
+
+    # check if given config file exist if not then create one.
+    if not os.path.isfile(config_file_path):
+        open(config_file_path, 'a').close()
+
+    global_conf = Utils.json_load(config_file_path) #load config.json file into dict
     function_args = locals().keys()  #get all arguments passed to current function
     for arg in list(function_args):
         '''
@@ -40,5 +57,11 @@ def cli(no_screenshot, no_log, browser, web_driver_path, locale, test_script_pat
         '''
         global_conf[arg] = locals().get(arg)
     
-    logger_init(global_conf['log'], global_conf['dev'])
-    obj = commmandParser(global_conf)
+    # init logging
+    LogGen.loggen(global_conf['log'], global_conf['dev'])
+    logging.info("---------- new run -----------")
+
+    # init commandParser and pass global config
+    commmandParser(global_conf)
+    # print(global_conf)
+    # util.json_dump(config_file_path, global_conf)

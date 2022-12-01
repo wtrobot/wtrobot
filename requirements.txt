@@ -1,4 +1,5 @@
-selenium==3.14.1
+selenium==4.6.1
+webdriver-manager==3.8.5
 pyyaml
 requests
 click==8.1.3

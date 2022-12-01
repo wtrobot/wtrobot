@@ -133,12 +133,13 @@ class Operations(object):
                 break
 
         return test_data
-
+    
     def full_page_screenshot(self, image_name=None):
         try:
             if not image_name:
                 image_name = int(round(time.time() * 1000))
-            self.driver.get_screenshot_as_file("./tmp/{0}.png".format(image_name))
+            # self.driver.get_screenshot_as_file("./tmp/{0}.png".format(image_name))
+            self.driver.save_screenshot("./tmp/{0}.png".format(image_name))
         except Exception as e:
             logging.exception(e)
 

@@ -1,21 +1,24 @@
 import os
 import logging
 from collections import OrderedDict
-from lib.utils.util import yaml_loader, yaml_dump
+from lib.utils.util import Utils
 from lib.wt_lib.action import Actions
 
 class commmandParser:
     def __init__(self, global_conf):
 
         self.global_conf = global_conf
-        self.testscript = yaml_loader(self.global_conf["test_script_path"])
+        # read the given testscript from testscript path
+        testdir = Utils.get_abs_filepath(self.global_conf["test_dir_path"])
+        self.testfile = os.path.join(testdir,self.global_conf["entry_test_script"])
+        self.testscript = Utils.yaml_loader(self.testfile)
         self.obj_action = Actions(self.global_conf)
         if not os.path.exists("./tmp"):
             os.makedirs("./tmp")
 
         # initate parser
         self.testscript_parser()
-
+    
     def testcase_parser(self, testcase_list, testcase_no):
         """
         This function will execute all steps from single testcase
@@ -30,7 +33,7 @@ class commmandParser:
             step_list.insert(0, "scenario")
             tmpdict = OrderedDict([("scenario", None)])
             testcase_list.insert(0, tmpdict)
-
+ 
         for step in step_list:
             index = step_list.index(step)
             if step == "scenario":
@@ -159,6 +162,6 @@ class commmandParser:
             )
 
         # update script file
-        yaml_dump(
-            filepath=self.global_conf["test_script_path"], data=self.testscript
+        Utils.yaml_dump(
+            filepath=self.testfile, data=self.testscript
         )
