@@ -8,7 +8,7 @@ Test.yml Syntax
 Template 
 ********
 
-.. code-block:: yml
+.. code-block:: yaml
 
     testcase:
         step1:

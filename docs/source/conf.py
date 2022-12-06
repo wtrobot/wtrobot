@@ -9,7 +9,7 @@
 project = 'WTRobot'
 copyright = '2022, Vishal Vijayraghavan'
 author = 'Vishal Vijayraghavan'
-version = '1.0.0rc3'
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 

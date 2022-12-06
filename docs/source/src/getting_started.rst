@@ -57,3 +57,13 @@ How to write your first test
 ****************************
 
 See the :doc:`test_syntax` for more details.
+
+How to contribute
+*****************
+
+Any opensource contribution to this project is most welcomed :)
+
+See the :doc:`dev_guidelines` for more project details.
+
+
+Happy Testing :)
