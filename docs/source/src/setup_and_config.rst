@@ -1,30 +1,28 @@
-.. _Docs:
+.. _SetupConfig:
 
-Setup & Config
-##############
+Setup & Configuration
+#####################
 
 .. contents::
 
 
-Installation:
-*************
+Installation
+************
 .. code-block::
     :caption: PyPi installation
 
     $ pip install wtrobot
-
-or 
 
 .. code-block::
     :caption: Installation from sources
 
     $ git clone <repo url>
     $ cd <project dir>
-    $ python3 install setup.py
+    $ pip install .
 
 
-Config:
-*******
+Config
+******
 You can pass config file or cli will generated it for you.
 
 TBD...

@@ -16,7 +16,8 @@ It is a tool to minimize your dependencies on XPATHs for writing end to end auto
    :titlesonly:
    :glob: 
 
-   src/setup&config
-   src/usage_guidelines
+   src/getting_started
+   src/setup_and_config
    src/dev_guidelines
+   
 
