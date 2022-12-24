@@ -1,33 +1,23 @@
-.. _DevGuidelines:
+# Developer Guidelines
 
-Developer Guidelines
-####################
+## Setup
 
-.. contents::
-
-Setup
-*****
-
-.. code-block::
-    :caption: setup a virtual environment 
+setup a virtual environment 
 
     $ pip install virtualenv
     $ virtualenv venv
     $ activate venv/bin/activate
 
-.. code-block::
-    :caption: clone repo and install
+clone repo and install
 
     $ git clone <repo url>
     $ cd <project dir>
     $ pip install -e .
 
-Project Structure
-*****************
+## Project Structure
 
-Our WTRobot library lives in :code:`lib` dir.
+Our WTRobot library lives in `lib` dir.
 
-.. code-block::
 
     lib/
     ├── cli/                  // all click based file are here
@@ -51,7 +41,6 @@ Our WTRobot library lives in :code:`lib` dir.
         ├── operations.py               // xpath parser, locate elements, etc
         |
 
-Pull Requests
-*************
+## Pull Requests
 
-:code:`Dev` is the Development branch and contributors are requested to raise PR against dev branch only.
+`Dev` is the Development branch and contributors are requested to raise PR against dev branch only.

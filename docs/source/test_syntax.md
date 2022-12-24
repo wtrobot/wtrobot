@@ -1,14 +1,6 @@
-.. _TestSyntax:
+# Test.yml Syntax
 
-Test.yml Syntax
-###############
-
-.. contents::
-
-Template 
-********
-
-.. code-block:: yaml
+## Template 
 
     testcase:
         step1:
@@ -21,5 +13,6 @@ Template
         step2: ...
 
         step3:  ...
+
 
 TBD....

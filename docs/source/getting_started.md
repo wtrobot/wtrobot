@@ -1,25 +1,17 @@
-.. _Getting_Started:
-
-Getting Started 
-###############
-
-.. contents::
+# Getting Started 
 
 WTRobot is no-code test automation framework.
 It uses some powerful python libraries like selenium, requests, unittest, etc to create this magic.
 
+## How to install
 
-How to install
-**************
+See the [setup and config](setup_and_config.md) for more details.
 
-See the :doc:`setup_and_config` for more details.
+## User Command
 
-User Command
-************
 WTRobot has two sub commands run & clean
 
-.. code-block::
-    :caption: Run the test suite
+Run the test suite
     
     $ wtrobot run  --help
     Usage: wtrobot run [OPTIONS]
@@ -39,8 +31,7 @@ WTRobot has two sub commands run & clean
     --help                         Show this message and exit.
 
 
-.. code-block::
-    :caption: Clean the tmp dir and old logs
+Clean the tmp dir and old logs
 
     $ wtrobot clean --help
     Usage: wtrobot clean [OPTIONS]
@@ -52,18 +43,15 @@ WTRobot has two sub commands run & clean
     -l, --log  clean entire log file
     --help     Show this message and exit.
 
+## How to write your first test
 
-How to write your first test
-****************************
+See the [test syntax](test_syntax.md) for more details.
 
-See the :doc:`test_syntax` for more details.
-
-How to contribute
-*****************
+## How to contribute
 
 Any opensource contribution to this project is most welcomed :)
 
-See the :doc:`dev_guidelines` for more project details.
+See the [dev guidelines](dev_guidelines.md) for more project details.
 
 
 Happy Testing :)

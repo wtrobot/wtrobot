@@ -7,21 +7,16 @@ WTRobot
 =======
 
 
-
 A web automation framework inspired from behave and robot framework. 
 
 It is a tool to minimize your dependencies on XPATHs for writing end to end automation.
 
 
-
-
 .. toctree::
-   :maxdepth: 2
    :titlesonly:
-   :glob: 
+   :hidden:
 
-   src/getting_started
-   src/setup_and_config
-   src/test_syntax
-   src/dev_guidelines
-
+   getting_started
+   setup_and_config
+   test_syntax
+   dev_guidelines
