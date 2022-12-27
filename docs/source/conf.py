@@ -24,3 +24,8 @@ exclude_patterns = []
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
+
+html_theme_options = {
+    'logo': 'wtlogo.png',
+    'show_related': 'true',
+}
