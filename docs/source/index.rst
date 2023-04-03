@@ -8,9 +8,8 @@ WTRobot
 
 
 A web automation framework inspired from behave and robot framework. 
-
-It is a tool to minimize your dependencies on XPATHs for writing end to end automation.
-
+WTRobot is no-code test automation framework. 
+It uses some powerful python libraries like selenium, requests, unittest, etc to create this magic.
 
 .. toctree::
    :titlesonly:

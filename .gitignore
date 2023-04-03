@@ -1,5 +1,7 @@
 .vscode/
 
+*egg-info/
+
 # Distribution / packaging
 .Python
 build/

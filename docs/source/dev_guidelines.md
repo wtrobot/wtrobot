@@ -2,17 +2,28 @@
 
 ## Setup
 
-setup a virtual environment 
+1. Setup a virtual environment 
+    
+    	$ pip install virtualenv
+    	$ virtualenv venv
+    	$ activate venv/bin/activate
 
-    $ pip install virtualenv
-    $ virtualenv venv
-    $ activate venv/bin/activate
+2. Clone repo and install
+    :::{important}
+    Install `make` and `jinja2-cli` package
+    :::
+		$ git clone <repo url>
+    	$ cd <project dir>
+		$ make localdev
+    
+### Package Maintainers
+:::{important}
+Password less login to pypi creare .pypirc as mentioned in <https://packaging.python.org/en/latest/specifications/pypirc>
+:::	
+	$ pip install -r dev-requirements.txt
+	$ make build-push     (default push to pypi repo) 
+	$ make build-push PUSH_TO=testpypi      (one can specify where to push package)
 
-clone repo and install
-
-    $ git clone <repo url>
-    $ cd <project dir>
-    $ pip install -e .
 
 ## Project Structure
 

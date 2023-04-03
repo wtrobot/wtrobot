@@ -1,20 +1,19 @@
-# Setup & Configuration
+# Setup
 
+- PyPi installation
 
-## Installation
+        $ pip install wtrobot
 
-PyPi installation
-
-    $ pip install wtrobot
-
-Installation from sources
-
+- Installation from sources
+:::{important}
+Install `make` and `jinja2-cli` package
+:::
     $ git clone <repo url>
     $ cd <project dir>
-    $ pip install .
+	$ make local
+	
 
-
-## Config
+# Configuration
 
 You can pass config file or cli will generated it for you.
 

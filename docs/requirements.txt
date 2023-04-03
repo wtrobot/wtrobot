@@ -1,2 +1,5 @@
-sphinx==4.5.0
 myst_parser
+sphinx==4.5.0
+sphinx-copybutton
+sphinx-rtd-theme
+sphinx-design

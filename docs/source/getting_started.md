@@ -1,8 +1,5 @@
 # Getting Started 
 
-WTRobot is no-code test automation framework.
-It uses some powerful python libraries like selenium, requests, unittest, etc to create this magic.
-
 ## How to install
 
 See the [setup and config](setup_and_config.md) for more details.
