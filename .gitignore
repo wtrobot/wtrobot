@@ -4,6 +4,7 @@
 Drivers/
 tests/
 old*.py
+setup.py
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

@@ -1,27 +1,17 @@
-# *WTRobot*
-
-------------------
+<a href="http://wtrobot.rtfd.io"><img alt="downloads" src ="https://img.shields.io/badge/WTRobot-025E8C?style=for-the-badge&logoColor=white"></a>  <a href="https://pypi.org/project/wtrobot"><img alt="downloads" src="https://img.shields.io/pypi/v/wtrobot?style=for-the-badge&color=green" target="_blank" /></a>
 
 ## Introduction
 
-The web automation framework inspired from [behave](https://behave.readthedocs.io/en/latest) and [robot](https://robotframework.org) framework. It is a tool to minimize your dependencies on XPATHs for writing end to end automation.
+The web automation framework inspired from [behave](https://behave.readthedocs.io/en/latest) and [robot](https://robotframework.org) framework. Its an No-Code testing framework.
 
-The tool follows a yml scripting which you will find below.
+[Learn more](https://wtrobot.readthedocs.io/en/latest/getting_started.html)
 
 ## Setup
 
 ### Install
 
 ```console
-> pip install wtrobot
-```
-
-### Build from source
-
-```console
-> git clone <this repo>
-> cd <repo directory>
-> python setup.py install
+$ pip install wtrobot
 ```
 
 > NOTE
@@ -31,19 +21,28 @@ The tool follows a yml scripting which you will find below.
   - [firefox](https://github.com/mozilla/geckodriver/releases) & [chrome/chromium](https://chromedriver.chromium.org/downloads)
 - Unzip or untar the executable and place in selenium_drivers dir.
 
+### Package Maintainers Guide
+1. Install all dependencies to build & push package to pypi
+```console
+$ pip install -r dev-requirements.txt
+``` 
+also install `make`
+> NOTE: password less login to pypi creare .pypirc as mentioned in https://packaging.python.org/en/latest/specifications/pypirc/ 
+
+2. Build & Push to pypi
+```console
+$ make build-push     (default push to pypi repo) 
+$ make build-push PUSH_TO=testpypi      (one can specify where to push package)
+```
 ## Executing Script
 
 - Write all your test cases into test.yaml and execute
 
 ```console
-> wtrobot
-or 
-python3 -m wtrobot
+$ wtrobot
 ```
 
-> NOTE
-
-- On initial run script will ask you for few configuration question and create config.json file.
+> NOTE : On initial run script will ask you for few configuration question and create config.json file.
 
 ## Syntax of test.yaml file
 
