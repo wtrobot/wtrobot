@@ -2,7 +2,7 @@ from re import A
 import sys
 import click
 from wtrobot.utils import Utils
-from wtrobot.wt_lib.testfile_parser import CommmandParser 
+from wtrobot.wt_lib.testfile_parser import Parser
 import os
 import logging
 from wtrobot.utils import LogGen
@@ -12,6 +12,8 @@ import datetime
 @click.option('-s','--no-screenshot', default=False, is_flag=True, help="If you don't need screenshots to be captured")
 @click.option('-l','--no-log', default=False,is_flag=True, help="If you don't need logging")
 @click.option('-b','--browser', default='firefox', help="browser on which you want to run tests")
+@click.option('-g','--selenium-grid', default=False, is_flag=True, help="Run tests on standalone selenium grid")
+@click.option('-i','--selenium-grid-ip', default='http://localhost:4444/wd/hub', help="Specify selenium grid IP")
 @click.option('-w','--web-driver-manager', default=False, is_flag=True, help="use webdriver manager insted of local selenium webdriver")
 @click.option('-d','--web-driver-path', help="selenium webdriver path or set value to 'local' to use syspath drivers")
 @click.option('-L','--locale', default="en", help="browser locale in which you want to run tests")
@@ -21,12 +23,12 @@ import datetime
 @click.option('-c','--config-file-path', default="config.json", help="config file path")
 @click.option('-f','--browser-fullscreen', default=False, is_flag=True, help="Set your browser window to fullscreen mode else it will only maximize")
 @click.option('-r','--results-dir', default='./results', help="dir store your wtlogs and screenshot")
-def cli(no_screenshot, no_log, browser, web_driver_manager, web_driver_path, locale, test_dir_path, entry_test_script, dev, config_file_path, browser_fullscreen, results_dir):
+def cli(no_screenshot, no_log, browser, selenium_grid, selenium_grid_ip, web_driver_manager, web_driver_path, locale, test_dir_path, entry_test_script, dev, config_file_path, browser_fullscreen, results_dir):
     '''
-    run all wtrobot testsuit.
+    Run all wtrobot testsuit.
     It will also take screenshot and log every step. 
     '''
-    
+    # keywords to terminate testrun
     wt_exit_keywords = ["quit","close","exit","end"]
 
     # arg_exclude=('no_screenshot','no_log')
@@ -37,7 +39,7 @@ def cli(no_screenshot, no_log, browser, web_driver_manager, web_driver_path, loc
     if not os.path.isdir(test_dir_path):
         testfile= os.path.join(test_dir_path, entry_test_script)
         if not os.path.isfile(entry_test_script):
-            print("invalid test dir path or entry test script path given.")
+            print("Invalid test dir path => '{0}' or entry test script path => '{1}' given.".format(test_dir_path, entry_test_script))
             sys.exit(1)
 
     # check if given config file exist if not then create one.
@@ -47,24 +49,34 @@ def cli(no_screenshot, no_log, browser, web_driver_manager, web_driver_path, loc
     global_conf = Utils.json_load(config_file_path) #load config.json file into dict
     function_args = locals().keys()  #get all arguments passed to current function
     
-    print(function_args)
+    # print(function_args)
     
     for arg in list(function_args):
         '''
         check if arguments is
         - not in exclude list
         - is false
-        - not in config file
+        - also not in config file
         then ask user to enter input
         '''
         
         # print(arg+" : "+str(locals().get(arg)))
         
         if (arg not in arg_exclude):
+            # print("\n"+arg, locals().get(arg), end=" ")
             if ( locals().get(arg) is None) and global_conf.get(arg) == None:
+                
                 # check if arg is web driver path and wdm is false then ask user to input else skip
                 if web_driver_manager is True and arg == "web_driver_path":
                     pass
+                
+                elif selenium_grid is True and arg == "web_driver_path":
+                    pass
+
+                # if selenium grid it true then ask for selenium grid ip
+                elif selenium_grid and arg == "selenium_grid_ip":
+                    global_conf[arg] = input("Input "+arg+" :")
+
                 else:
                     # if user hits any exit keyword in input exit the test run
                     global_conf[arg] = input("Input "+arg+" :")
@@ -83,13 +95,6 @@ def cli(no_screenshot, no_log, browser, web_driver_manager, web_driver_path, loc
             else:
                 global_conf[arg] = locals().get(arg)
     
-    # if len(arg_exclude) > 0:
-    #     for arg in arg_exclude:
-    #         '''
-    #         add exclude list args into global config dict
-    #         '''
-    #         global_conf[arg] = locals().get(arg)
-    
     # Save global config to config.json file for next run
     Utils.json_dump(config_file_path, global_conf)
 
@@ -105,6 +110,7 @@ def cli(no_screenshot, no_log, browser, web_driver_manager, web_driver_path, loc
         tmp_str = tmp_str.split("-")[1].strip().replace("/","-")
         os.rename(resultsdir_path, os.path.join(global_conf['results_dir'],tmp_str))
 
+    # create result dirs 
     os.makedirs(resultsdir_path)
     os.makedirs(resultsdir_path+"/screenshots")
     os.makedirs(resultsdir_path+"/logs")
@@ -115,6 +121,6 @@ def cli(no_screenshot, no_log, browser, web_driver_manager, web_driver_path, loc
     LogGen.loggen(filename= resultsdir_path+"/logs/wtlog.log", dev=global_conf['dev'])
     logging.info("---------- Test Run @ {} -----------".format(ctime))
 
-    # init commandParser and pass global config
-    CommmandParser(global_conf)
+    # init Parser and pass global config
+    Parser(global_conf)
     

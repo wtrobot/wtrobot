@@ -5,142 +5,38 @@ from time import sleep
 import urllib3
 urllib3.disable_warnings()
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.utils import ChromeType
 
-from .browser_options import BrowserOptions
-
+from .browser_init import BrowserInit
+from .grid_init import GridInit
 from dotenv import load_dotenv
 load_dotenv()
 
-class Browser_Init:
+class Browser:
     
     # here wdm is webdriver_manager you want to enable or disable/use local driver 
     def __init__(self, global_conf) -> None:
-        self.driver_dir = r"Drivers"
         self.global_conf = global_conf
-        self.browser = global_conf['browser']
-        self.browser_locale = global_conf['locale']
-        self.wdm=global_conf['web_driver_manager']
-        self.logdir= os.path.join(self.global_conf['resultsdir_path'],"logs")
-        if not os.path.exists(self.logdir):
-            os.makedirs(self.logdir)
-        
-        self.browser_init()
+        # self.browser_init()
         # getattr(self, "_"+self.browser)()
 
-    # init firefox browser
-    def _firefox(self):
-        log_path= os.path.join(self.logdir,'geckodriver.log')
-        print(log_path)
-        # use webdriver manager
-        if self.global_conf['web_driver_manager'] is True:
-            logging.info("using wdm to init firefox browser session")
-            service = FirefoxService(GeckoDriverManager(path = self.driver_dir).install(), log_path=log_path) if self.wdm else None
-            self.driver = webdriver.Firefox(
-                options=BrowserOptions.firefox_options(self.browser_locale),
-                service=service
-            )
-        # if not using webdriver manager
-        else:
-            service = FirefoxService(log_path=log_path)
-            # use webdriver from system path
-            if self.global_conf['web_driver_path'] and self.global_conf['web_driver_path'].lower() == "local":
-                logging.info("using syspath driver to init firefox browser session")
-                self.driver = webdriver.Firefox(
-                    options=BrowserOptions.firefox_options(self.browser_locale),
-                    service=service
-                )
-
-            # use webdriver from given path
-            else:
-                logging.info("using custom driver path to init firefox browser session")
-                self.driver = webdriver.Firefox(
-                    executable_path=self.global_conf['web_driver_path'],
-                    options=BrowserOptions.firefox_options(self.browser_locale),
-                    service=service
-                )
-
-    # init chrome browser
-    def _chrome(self):
-        
-        log_path= os.path.join(self.logdir,'chromedriver.log')
-
-        # use webdriver manager
-        if self.global_conf['web_driver_manager'] is True:
-            logging.info("using wdm to init chrome browser session")
-            service=ChromeService(ChromeDriverManager(path = self.driver_dir).install(), log_path=log_path) if self.wdm else None
-            self.driver = webdriver.Chrome(
-                options=BrowserOptions.chrome_options(self.browser_locale),
-                service=service
-            )
-        # if not using webdriver manager
-        else:
-            service = ChromeService(log_path=log_path)
-            # use webdriver from system path
-            if self.global_conf['web_driver_path'] and self.global_conf['web_driver_path'].lower() == "local":
-                logging.info("using syspath driver to init chrome browser session")
-                self.driver = webdriver.Chrome(
-                    options=BrowserOptions.chrome_options(self.browser_locale),
-                    service=service
-                )
-
-            # use webdriver from given path
-            else:
-                logging.info("using custom driver path to init chrome browser session")
-                self.driver = webdriver.Chrome(
-                    executable_path=self.global_conf['web_driver_path'],
-                    options=BrowserOptions.chrome_options(self.browser_locale),
-                    service=service
-                )
-
-    # init chromium browser
-    def _chromium(self):
-
-        log_path= os.path.join(self.logdir, 'chromedriver.log')
-        
-        # use webdriver manager
-        if self.global_conf['web_driver_manager'] is True:
-            logging.info("using wdm to init chromium browser session")
-            service=ChromeService(ChromeDriverManager(path = self.driver_dir, chrome_type=ChromeType.CHROMIUM).install(),log_path=log_path) if self.wdm else None
-            self.driver = webdriver.Chrome(
-                options=BrowserOptions.chrome_options(self.browser_locale),
-                service=service
-            )
-        # if not using webdriver manager
-        else:
-            service = ChromeService(log_path=log_path)
-            # use webdriver from system path 
-            if self.global_conf['web_driver_path'] and self.global_conf['web_driver_path'].lower() == "local":
-                logging.info("using syspath driver to init chromium browser session")
-                self.driver = webdriver.Chrome(
-                    options=BrowserOptions.chrome_options(self.browser_locale),
-                    service=service
-                )
-            
-            # use webdriver from given path
-            else:
-                logging.info("using custom driver path to init chromium browser session")
-                self.driver = webdriver.Chrome(
-                    executable_path=self.global_conf['web_driver_path'],
-                    options=BrowserOptions.chrome_options(self.browser_locale),
-                    service=service
-                )
     
     def browser_init(self):
         '''
         call respective browser function and init webdriver 
         '''
-        getattr(self, "_"+self.browser)()
+        browser_obj = BrowserInit(self.global_conf)
+        if self.global_conf['selenium_grid']:
+            return GridInit(self.global_conf)._browser()
+        else:
+            bobj= BrowserInit(self.global_conf) 
+            return getattr(bobj, "_"+self.global_conf['browser'])()
+            
         if self.global_conf['browser_fullscreen']:
             self.driver.fullscreen_window()
         else:
             self.driver.maximize_window()
 
 if __name__ == "__main__":
-    obj=Browser_Init(browser="firefox",locale="hi_IN",dir=r"Drivers").driver
+    obj=Browser(browser="firefox",locale="hi_IN",dir=r"Drivers").driver
     obj.get("https://google.com")
     obj.close()

@@ -1,19 +1,33 @@
 import click
 import os
 import glob
+import shutil
 
 @click.command()
-@click.option('-t','--tmp',default=False,is_flag=True, help="clean tmp dir")
-@click.option('-l','--log',default=False,is_flag=True,help="clean entire log file")
-def cli(tmp,log):
+@click.option('-a','--all-runs',default=False,is_flag=True, help="clean all results")
+@click.option('-l','--last-run',default=False,is_flag=True,help="clean last result")
+@click.option('-r','--run',default=None, help="clean specific run result")
+def cli(all_runs,last_run,run):
     '''
-    clean tmp dir and/or log file.
-    '''
-    if not tmp and not log:
-        print("invalid command check --help")
-    if tmp:
-        files = glob.glob('tmp/*')
-        for f in files:
-            os.remove(f)
-    if log:
-        open("wtlog.log", "w").close()
+    Clean tmp dir and/or log file.
+    ''' 
+
+    if all_runs:
+        if os.path.exists("./results"):
+            shutil.rmtree("./results")
+        else:
+            print("There are not results to delete")
+    elif last_run:
+        if os.path.exists("./results/new"):
+            shutil.rmtree("./results/new")
+        else:
+            print("There are no lastest results to delete")
+    elif run:
+        if os.path.exists("./results/{}".format(run)):
+            shutil.rmtree("./results/{}".format(run))
+        else:
+            print("Specified result dir doesnot exist")
+    else:
+        ctx = click.get_current_context()
+        click.echo(ctx.get_help())
+        ctx.exit()

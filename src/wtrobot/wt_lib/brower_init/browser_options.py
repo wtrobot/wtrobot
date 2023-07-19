@@ -2,7 +2,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 class BrowserOptions:
-    
+
     @staticmethod
     def firefox_options(locale):
         options = FirefoxOptions()

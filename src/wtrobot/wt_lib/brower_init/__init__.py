@@ -1,5 +1,6 @@
-from .main import Browser_Init
-from .grid_init import Browser_Grid
+from .main import Browser
+from .grid_init import GridInit
 from .browser_options import BrowserOptions
+from .browser_init import BrowserInit
 
-__all__ = ['Browser_Init','Browser_Grid','BrowserOptions']
+__all__ = ['Browser','GridInit','BrowserOptions','BrowserInit']

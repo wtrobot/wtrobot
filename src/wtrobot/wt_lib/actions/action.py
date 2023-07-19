@@ -13,13 +13,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from wtrobot.utils.util import Utils
 from wtrobot.wt_lib.operations import Operations
-from wtrobot.wt_lib.brower_init import Browser_Init
+from wtrobot.wt_lib.brower_init.main import Browser
 
 class Actions():
 
     def __init__(self, global_conf):
         self.global_conf = global_conf
-        self.driver = Browser_Init(global_conf).driver
+        self.driver = Browser(global_conf).browser_init()
         self.opr_obj = Operations(self.driver, global_conf)
     
     def logger_decorator(function):

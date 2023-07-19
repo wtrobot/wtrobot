@@ -5,7 +5,7 @@ from wtrobot.utils.util import Utils
 from wtrobot.wt_lib.actions import Actions
 from .testscript_parser import TestScriptParser
 
-class CommmandParser:
+class Parser:
 
     def __init__(self, global_conf):
         
